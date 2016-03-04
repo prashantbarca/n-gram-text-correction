@@ -46,3 +46,24 @@ group :development do
   gem 'spring'
 end
 
+
+gem 'foundation-rails', '~> 5.5'
+gem 'high_voltage'
+gem 'simple_form'
+gem 'therubyracer', :platform=>:ruby
+gem 'unicorn'
+gem 'unicorn-rails'
+
+group :development do
+  gem 'better_errors'
+  gem 'hub', :require=>nil
+  gem 'quiet_assets'
+  gem 'rails_apps_pages'
+  gem 'rails_layout'
+end
+
+group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-rescue'
+end
+
