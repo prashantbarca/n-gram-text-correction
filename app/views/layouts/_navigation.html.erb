@@ -1,12 +1,18 @@
 <%# navigation styled for Zurb Foundation 5 %>
 <nav class="top-bar" data-topbar>
-  <ul class="title-area">
-    <li class="name"><%= link_to 'Home', root_path %></li>
-    <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
-  </ul>
-  <div class="top-bar-section">
-    <ul>
-      <%= render 'layouts/navigation_links' %>
+    <ul class="title-area">
+        <li class="name"><%= link_to 'Home', root_path %></li>
+        <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
     </ul>
-  </div>
+    <div class="top-bar-section">
+        <ul>
+            <%= render 'layouts/navigation_links' %>
+        </ul>
+        <ul class="right">
+            <li class="active"><a href="#">Seeding</a></li>
+            <li><%= link_to 'Dictionary', seed_dictionary_path %></li>
+            <li><%= link_to 'Bigrams', seed_bigrams_path %></li>
+            <li><%= link_to 'Trigrams', seed_trigrams_path %></li>
+        </ul>
+    </div>
 </nav>

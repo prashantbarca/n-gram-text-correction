@@ -15,8 +15,12 @@
       <%= render 'layouts/navigation' %>
     </header>
     <main role="main">
-       <%= render 'layouts/messages' %>
-       <%= yield %>
+       <%= display_flash_messages %>
+       <div class="row">
+             <div class="large-9 columns">
+                <%= yield %>
+             </div>
+         </div>
     </main>
   </body>
 </html>

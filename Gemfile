@@ -31,3 +31,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-rescue'
 end
+
+# The gems below are my own
+
+gem 'foundation_rails_helper'
