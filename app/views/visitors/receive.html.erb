@@ -4,5 +4,7 @@
 <h3>Corrected String</h3>
 <p><%= @corrected %></p>
 
-<h3>Predict Next Word</h3>
-<p><%= @predicted %></p>
+<h3>Predicted Strings</h3>
+<% @predicted.each do |p| %>
+<p><%= @corrected+" "+p  %></p>
+<% end %>
