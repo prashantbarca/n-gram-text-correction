@@ -10,10 +10,13 @@ class VisitorsController < ApplicationController
             return c1.first
         else
             c2 = check_word(permute_words(word))
-            c3 = check_word(double_permute_words(word))
+            if c2.length==0
+                c3 = check_word(double_permute_words(word))
+            end
         end
+
         if (c2+c3).length>0
-            (c3).each do |e|
+            (c2+c3).each do |e|
                 @dict =  Dictionary.find_by_word(e)
                 list[@dict.word] = @dict.count
             end
@@ -24,6 +27,7 @@ class VisitorsController < ApplicationController
         else
             return word
         end
+        return word
     end
     def receive
         @corrected = ""
@@ -37,7 +41,9 @@ class VisitorsController < ApplicationController
         end
         dom =@random.split(' ')
         dom.each do |d|
-            @corrected = @corrected + correct_words(d)+" "
+            puts d
+            puts correct_words d
+            @corrected = @corrected + correct_words(d)+" " 
         end
         c = @corrected.split(' ')
         @predicted = predict_trigram(c)+predict_bigram(c)
