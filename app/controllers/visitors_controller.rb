@@ -1,6 +1,6 @@
 require 'csv'
 class VisitorsController < ApplicationController
-    def correct_words word
+    def correct_words word,prev
         c1 = check_word([word])
         c2 = []
         c3 = []
@@ -31,16 +31,30 @@ class VisitorsController < ApplicationController
         @corrected = ""
         @predicted = []
         if params[:random_string] && params[:random_string].length > 0
-            @random  = params[:random_string].strip.gsub(/\?\!#\$%\^&/,'')
+            @random  = params[:random_string].strip
+            puts @random
+            @random.gsub!(/\:\?\.\,\!\@\#\$\%\^\&\*/,'')
+            puts @random
             flash[:info]="Success"
         else
             flash[:alert]="Enter a string!"
             return redirect_to root_url
         end
+        if @random.length==0
+            flash[:alert]="Enter a string!"
+            return redirect_to root_url
+        end
         dom =@random.split(' ')
+        i = 0
         dom.each do |d|
             puts d
-            @corrected = @corrected + correct_words(d)+" " 
+            if dom[i-1]
+                @corrected = @corrected + correct_words(d,dom[i-1])+" " 
+            else
+                @corrected = @corrected + correct_words(d,nil)+" " 
+            end
+
+            i= i+1
         end
         c = @corrected.split(' ')
         @predicted = predict_trigram(c).merge(predict_bigram(c))
