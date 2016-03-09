@@ -1,8 +1,6 @@
 Text Correction
 ================
-
-This application was generated with the [rails_apps_composer](https://github.com/RailsApps/rails_apps_composer) gem
-provided by the [RailsApps Project](http://railsapps.github.io/).
+This app was created for the purpose of a CS76 course at Dartmouth, to perform basic NLP, of spelling correction, and text prediction
 
 Ruby on Rails
 -------------
@@ -17,6 +15,11 @@ Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.
 Getting Started
 ---------------
 
+- Download a copy of the code
+- cd n-gram-text-correction
+- bundle install
+- rails s
+- go to localhost:3000
 Documentation and Support
 -------------------------
 
