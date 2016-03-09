@@ -8,6 +8,7 @@
 <form action="/visitors/receive" method="get" accept-charset="utf-8">
     Enter your Sentence here : 
 <input type="text" name="random_string" id="" value="" />
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 <input type="submit" name="" id="" value="Let's Go!" class="button" />
 </form>
  
