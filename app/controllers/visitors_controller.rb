@@ -1,5 +1,4 @@
 require 'csv'
-require './lib/nanogram.rb'
 class VisitorsController < ApplicationController
     def correct_words word
         c1 = check_word([word])
@@ -20,7 +19,6 @@ class VisitorsController < ApplicationController
                 @dict =  Dictionary.find_by_word(e)
                 list[@dict.word] = @dict.count
             end
-            puts list
             max = list.values.max
             key = list.select{|k,v| v==max}.keys.first
             return key
@@ -46,21 +44,23 @@ class VisitorsController < ApplicationController
             @corrected = @corrected + correct_words(d)+" " 
         end
         c = @corrected.split(' ')
-        @predicted = predict_trigram(c)+predict_bigram(c)
+        @predicted = predict_trigram(c).merge(predict_bigram(c))
     end
     def predict_trigram c
-        @predicted = []
+        @predicted = {}
         if c[c.length-1] and c[c.length-2]
             @trigram = Trigram.find_by_sql("SELECT word3,count from trigrams where word1='#{c[c.length-2]}' and word2='#{c[c.length-1]}'")
+            @bigram = Bigram.find_by_sql("SELECT count from bigrams where word1='#{c[c.length-2]}' and word2='#{c[c.length-1]}'").first
             @trigram.sort_by! do |count|
                 count.count
             end
             @trigram = @trigram.reverse
             count = 0
             @trigram.each do |t|
-                puts t.word3,t.count
                 count = count+1
-                @predicted.push t.word3
+                i = t.count.to_f
+                j = @bigram.count.to_f
+                @predicted[t.word3] = i/j
                 if count == 3
                     break
                 end
@@ -69,9 +69,10 @@ class VisitorsController < ApplicationController
         return @predicted
     end
     def predict_bigram c
-        @predicted = []
+        @predicted = {}
         if c[c.length-1] 
             @trigram = Bigram.find_by_sql("SELECT word2,count from trigrams where word1='#{c[c.length-1]}'")
+            @unigram = Dictionary.find_by_word(c[c.length-1])
             @trigram.sort_by! do |count|
                 count.count
             end
@@ -80,7 +81,9 @@ class VisitorsController < ApplicationController
             @trigram.each do |t|
                 puts t.word2,t.count
                 count = count+1
-                @predicted.push t.word2
+                i = t.count.to_f
+                j = @unigram.count.to_f
+                @predicted[t.word2] = i/j
                 if count == 3
                     break
                 end

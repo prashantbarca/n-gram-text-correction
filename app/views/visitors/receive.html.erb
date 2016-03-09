@@ -5,6 +5,6 @@
 <p><%= @corrected %></p>
 
 <h3>Predicted Strings</h3>
-<% @predicted.each do |p| %>
-<p><%= @corrected+" "+p  %></p>
+<% @predicted.each do |k,v| %>
+    <p><%= @corrected+" "+k + "   |   Prob = #{v}"  %></p>
 <% end %>
