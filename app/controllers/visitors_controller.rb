@@ -31,7 +31,7 @@ class VisitorsController < ApplicationController
         @corrected = ""
         @predicted = []
         if params[:random_string] && params[:random_string].length > 0
-            @random  = params[:random_string].strip
+            @random  = params[:random_string].strip.gsub(/\?\!#\$%\^&/,'')
             flash[:info]="Success"
         else
             flash[:alert]="Enter a string!"
@@ -40,7 +40,6 @@ class VisitorsController < ApplicationController
         dom =@random.split(' ')
         dom.each do |d|
             puts d
-            puts correct_words d
             @corrected = @corrected + correct_words(d)+" " 
         end
         c = @corrected.split(' ')
